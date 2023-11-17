@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="report_academic_timetable" model="ir.actions.report">
+        <field name="name">Academic Timetable Report</field>
+        <field name="model">school.timetable</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">academic_timetable.academic_timetable_report_template</field>
+        <field name="report_file">academic_timetable.academic_timetable_report_template</field>
+        <field name="binding_model_id" ref="model_school_timetable"/>
+        <field name="binding_type">report</field>
+     </record>
+</odoo>

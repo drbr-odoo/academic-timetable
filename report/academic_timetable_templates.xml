@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="academic_timetable_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <h1>Academic Timetable Report</h1>
+                    <div>
+                        <strong>Name:</strong> <t t-esc="o.name"/><br/>
+                        <strong>Standard:</strong> <t t-esc="o.standard.name"/><br/>
+                        <strong>Semester:</strong> <t t-esc="o.semester.name"/>
+                    </div>
+                    <br/>
+                    <br/>
+                    <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th t-foreach="o.entry_ids.mapped('time_slot_id')" t-as="time_slot">
+                                <t t-esc="time_slot.name"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <t t-foreach="o.entry_ids.sorted(key=lambda r: (r.time_slot_id.name, r.day))" t-as="entry">
+                            <tr>
+                                <td><t t-esc="entry.day"/></td>
+                                <td>
+                                    <t t-foreach="entry" t-as="course">
+
+                                        <t t-esc="course.course_id.code"/><br/>
+                                        <t t-esc="course.teacher_id.name"/><br/>
+                                        <t t-esc="course.room_id.location"/>
+                                    </t>
+                                </td>
+                        
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+

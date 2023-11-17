@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_timetable,access_school_timetable,model_school_timetable,base.group_user,1,1,1,1
+access_school_timetable_entry,access_school_timetable_entry,model_school_timetable_entry,base.group_user,1,1,1,1
+access_school_standard,access_school_standard,model_school_standard,base.group_user,1,1,1,1
+access_school_semester,access_school_semester,model_school_semester,base.group_user,1,1,1,1
+access_school_timeslot,access_school_timeslot,model_school_timeslot,base.group_user,1,1,1,1
+access_school_course,access_school_course,model_school_course,base.group_user,1,1,1,1
+access_school_room,access_school_room,model_school_room,base.group_user,1,1,1,1

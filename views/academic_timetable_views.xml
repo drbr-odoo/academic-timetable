@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_school_timetable_entry_tree" model="ir.ui.view">
+            <field name="name">school.timetable.entry.tree</field>
+            <field name="model">school.timetable.entry</field>
+            <field name="arch" type="xml">
+                <tree editable='top'>
+                    <field name="day"/> 
+                    <field name="teacher_id"/> 
+                    <field name="course_id"/> 
+                    <field name="time_slot_id"/> 
+                    <field name="room_id"/> 
+                </tree>
+            </field>
+        </record>
+    
+        <record id="view_school_timetable" model="ir.ui.view">
+        <field name="name">school.timetable.form</field>
+        <field name="model">school.timetable</field>
+        <field name="arch" type="xml">
+            <form string="Academic Timetable">
+                <sheet>
+                    <h1><field name="name" required='1'/></h1>
+                    <group>
+                        <group>
+                            <field name="standard"/>
+                            <field name="semester"/>   
+                        </group>
+                        <notebook>
+                            <page string="Timetable Entries">
+                                <field name="entry_ids"/>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_timetable_tree" model="ir.ui.view">
+            <field name="name">school.timetable.tree</field>
+            <field name="model">school.timetable</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/> 
+                    <field name="standard"/> 
+                    <field name="semester"/> 
+                </tree>
+            </field>
+        </record>
+
+        <record id="school_timetable_action" model="ir.actions.act_window">
+            <field name="name">School Timetable</field>
+            <field name="res_model">school.timetable</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Academic Timetable"
+                id="test_main_root"
+                sequence="10"/>
+
+        <menuitem name="TimeTable"
+            id="test_first_level_menu"
+            parent="test_main_root"
+            action="school_timetable_action"
+            sequence="1"/>
+
+<!-- ================================================================ -->
+        <record id="view_hr_employee_form_inherited" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherited</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_email']" position="after">
+                    <field name="course_id"/> 
+                    <field name="working_type"/>
+                </xpath>
+            </field>
+        </record>
+
+<!-- ====================== -->
+
+        <record id="view_school_standard_type_tree" model="ir.ui.view">
+            <field name="name">school.standard.type.tree</field>
+            <field name="model">school.standard</field>
+            <field name="arch" type="xml">
+                <tree editable='top'>
+                    <field name="name"/> 
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="school_standard_action" model="ir.actions.act_window">
+            <field name="name">School Standard</field>
+            <field name="res_model">school.standard</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Configuration"
+            id="timetable_config_menu"
+            parent="test_main_root"
+            sequence="35"/>
+
+        <menuitem name="Standards"
+            id="standard_menu"
+            parent="timetable_config_menu"
+            action="school_standard_action"
+            sequence="55"/>
+
+<!-- ===================================== -->
+        <record id="view_school_semester_tag_tree" model="ir.ui.view">
+            <field name="name">school.semester.tag.tree</field>
+            <field name="model">school.semester</field>
+            <field name="arch" type="xml">
+                <tree string ="Semester" editable="top">
+                    <field name="name"/>
+                    <field name="description"/> 
+                </tree>
+            </field>
+        </record>
+
+        <record id="school_semester_action" model="ir.actions.act_window">
+            <field name="name">School Semester</field>
+            <field name="res_model">school.semester</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Semesters"
+            id="semester_level_menu"
+            parent="timetable_config_menu"
+            action="school_semester_action"
+            sequence="46"/>
+
+<!-- =========================================== -->
+        <record id="view_school_course_tag_tree" model="ir.ui.view">
+            <field name="name">school.course.tag.tree</field>
+            <field name="model">school.course</field>
+            <field name="arch" type="xml">
+                <tree string ="Course" editable="top">
+                    <field name="code"/>
+                    <field name="name"/> 
+                </tree>
+            </field>
+        </record>
+
+        <record id="school_course_action" model="ir.actions.act_window">
+            <field name="name">School Course</field>
+            <field name="res_model">school.course</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Courses"
+            id="course_level_menu"
+            parent="timetable_config_menu"
+            action="school_course_action"
+            sequence="46"/>
+
+<!-- =========================================== -->
+        <record id="view_school_timeslot_tag_tree" model="ir.ui.view">
+            <field name="name">school.timeslot.tag.tree</field>
+            <field name="model">school.timeslot</field>
+            <field name="arch" type="xml">
+                <tree string ="Timeslot" editable="top">
+                    <field name="name"/>
+                    <field name="description"/> 
+             <!--        <field name="start_time"/>
+                    <field name="end_time"/> -->
+                </tree>
+            </field>
+        </record>
+
+        <record id="school_timeslot_action" model="ir.actions.act_window">
+            <field name="name">School Timeslot</field>
+            <field name="res_model">school.timeslot</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Timeslots"
+            id="timeslot_level_menu"
+            parent="timetable_config_menu"
+            action="school_timeslot_action"
+            sequence="47"/>
+
+<!-- ========================================== -->
+
+        <record id="view_school_room_tag_tree" model="ir.ui.view">
+            <field name="name">school.room.tag.tree</field>
+            <field name="model">school.room</field>
+            <field name="arch" type="xml">
+                <tree string ="Rooms" editable="top">
+                    <field name="location"/>
+                    <field name="capacity"/> 
+                </tree>
+            </field>
+        </record>
+
+        <record id="school_room_action" model="ir.actions.act_window">
+            <field name="name">School Room</field>
+            <field name="res_model">school.room</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Rooms"
+            id="room_level_menu"
+            parent="timetable_config_menu"
+            action="school_room_action"
+            sequence="48"/>
+
+
+    </data>
+</odoo>
