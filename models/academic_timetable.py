@@ -66,6 +66,20 @@ class TimetableEntry(models.Model):
             if conflict_entries:
                 raise ValidationError('Teacher is already assigned during this time slot on this day for the same standard and room!')
 
+    @api.constrains('time_slot_id', 'day', 'timetable_id.standard')
+    def _check_timeslot_visibility(self):
+        for entry in self:
+            visible_entries = self.env['school.timetable.entry'].search([
+                '&', '&',
+                ('day', '=', entry.day),
+                ('time_slot_id', '=', entry.time_slot_id.id),
+                ('timetable_id.standard', '=', entry.timetable_id.standard.id),
+                ('id', '!=', entry.id),  # Exclude the current entry
+            ])
+
+            if visible_entries:
+                raise ValidationError('This timeslot is already assigned for the same day and standard. Please choose another timeslot.')
+
 class SchoolStandard(models.Model):
     _name = 'school.standard'
     _description = 'School Standard'
@@ -86,8 +100,6 @@ class SchoolTimeslot(models.Model):
 
     name = fields.Char(string='Timeslot Name')
     description = fields.Text()
-    # start_time = fields.Datetime()
-    # end_time = fields.Datetime()
 
 class SchoolCourse(models.Model):
     _name = 'school.course'

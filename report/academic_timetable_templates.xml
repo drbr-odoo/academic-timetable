@@ -26,12 +26,14 @@
                                 <td>
                                     <t t-esc="day"/>
                                 </td>
-                                <t t-foreach="o.entry_ids.sorted(key=lambda r: (r.time_slot_id.name)).filtered(lambda r: r.day == day)" t-as="entry">
+                                <t t-foreach="o.entry_ids.mapped('time_slot_id')" t-as="time_slot">
                                     <td>
-                                        <t t-if="entry.day == day">
-                                            <t t-esc="entry.course_id.code"/><br/>
-                                            <t t-esc="entry.teacher_id.name"/><br/>
-                                            <t t-esc="entry.room_id.location"/><br/>
+                                        <t t-foreach="o.entry_ids" t-as="entry">
+                                            <t t-if="entry.day == day and entry.time_slot_id.id == time_slot.id">
+                                                <t t-esc="entry.course_id.code"/><br/>
+                                                <t t-esc="entry.teacher_id.name"/><br/>
+                                                <t t-esc="entry.room_id.location"/><br/>
+                                            </t>
                                         </t>
                                     </td>
                                 </t>
