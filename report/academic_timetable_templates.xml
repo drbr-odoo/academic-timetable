@@ -13,32 +13,31 @@
                     <br/>
                     <br/>
                     <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Day</th>
-                            <th t-foreach="o.entry_ids.mapped('time_slot_id')" t-as="time_slot">
-                                <t t-esc="time_slot.name"/>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <t t-foreach="o.entry_ids.sorted(key=lambda r: (r.time_slot_id.name, r.day))" t-as="entry">
+                        <thead>
                             <tr>
-                                <td><t t-esc="entry.day"/></td>
-                                <td>
-                                    <t t-foreach="entry" t-as="course">
-
-                                        <t t-esc="course.course_id.code"/><br/>
-                                        <t t-esc="course.teacher_id.name"/><br/>
-                                        <t t-esc="course.room_id.location"/>
-                                    </t>
-                                </td>
-                        
+                                <th>Day</th>
+                                <th t-foreach="o.entry_ids.mapped('time_slot_id')" t-as="time_slot">
+                                    <t t-esc="time_slot.name"/>
+                                </th>
                             </tr>
-                        </t>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']" t-as="day">
+                                <td>
+                                    <t t-esc="day"/>
+                                </td>
+                                <t t-foreach="o.entry_ids.sorted(key=lambda r: (r.time_slot_id.name)).filtered(lambda r: r.day == day)" t-as="entry">
+                                    <td>
+                                        <t t-if="entry.day == day">
+                                            <t t-esc="entry.course_id.code"/><br/>
+                                            <t t-esc="entry.teacher_id.name"/><br/>
+                                            <t t-esc="entry.room_id.location"/><br/>
+                                        </t>
+                                    </td>
+                                </t>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </t>
         </t>

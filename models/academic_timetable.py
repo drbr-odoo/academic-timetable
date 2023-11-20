@@ -21,7 +21,6 @@ class HrEmployee(models.Model):
     working_type = fields.Selection([('half-time','Half Time'),
                                     ('full-time','Full Time')])
 
-
 class TimetableEntry(models.Model):
     _name = 'school.timetable.entry'
     _description = 'Timetable Entry'
@@ -32,6 +31,7 @@ class TimetableEntry(models.Model):
     course_id = fields.Many2one('school.course', string='Course', required=True)
     time_slot_id = fields.Many2one('school.timeslot', string='Time Slot', required=True)
     room_id = fields.Many2one('school.room', string='Room', required=True)
+    # day_id = fields.Many2one('day.of.week')
     day = fields.Selection([
         ('monday', 'Monday'),
         ('tuesday', 'Tuesday'),
